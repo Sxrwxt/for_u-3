@@ -47,75 +47,6 @@
             margin-bottom: 25px;
         }
 
-        /* พื้นหลังป๊อปอัพ (Overlay) */
-        .modal-overlay {
-            display: none; /* ซ่อนไว้ก่อน */
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.85);
-            justify-content: center;
-            align-items: center;
-            z-index: 1000;
-        }
-
-        /* กล่องป๊อปอัพ */
-        .modal-box {
-            position: relative;
-            background-color: #1e1e24;
-            padding: 25px;
-            border-radius: 16px;
-            border: 2px solid #3a3a48;
-            max-width: 420px;
-            width: 90%;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.8);
-        }
-
-        /* ปุ่มกากบาทปิดมุมขวาบน */
-        .close-btn {
-            position: absolute;
-            top: 10px;
-            right: 15px;
-            font-size: 28px;
-            font-weight: bold;
-            color: #aaaaaa;
-            cursor: pointer;
-            transition: color 0.2s;
-            line-height: 1;
-        }
-
-        .close-btn:hover {
-            color: #ffffff;
-        }
-
-        .modal-img {
-            width: 100%;
-            max-height: 250px;
-            object-fit: cover;
-            border-radius: 8px;
-            margin-bottom: 15px;
-        }
-
-        .btn-container {
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-            margin-top: 15px;
-        }
-
-        .btn {
-            padding: 12px 30px;
-            font-size: 1.2rem;
-            font-weight: bold;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-        }
-
-        .btn-yes { background-color: #28a745; color: white; }
-        .btn-no { background-color: #dc3545; color: white; }
     </style>
 </head>
 <body>
@@ -176,23 +107,6 @@
         }
     </script>
 
-    <script>
-        function openPopup() {
-            document.getElementById('popupModal').style.display = 'flex';
-        }
-
-        function closePopup() {
-            document.getElementById('popupModal').style.display = 'none';
-        }
-
-        // กดพื้นที่สีดำด้านนอกเพื่อปิดป๊อปอัพได้ด้วย
-        window.onclick = function(event) {
-            var modal = document.getElementById('popupModal');
-            if (event.target == modal) {
-                modal.style.display = 'none';
-            }
-        }
-    </script>
 
 </body>
 </html>
