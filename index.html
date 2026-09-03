@@ -58,6 +58,51 @@
     <a href="https://youtu.be/DjvwDCw6pl4?si=JEOh-tw1heNgUD9c" target="_blank" class="rgb-link">
         กดแล้วโชกลับมา
     </a>
+<!-- ปุ่มป๊อบอัพ -->
+    <a class="rgb-link" onclick="openQuestion()">กดแล้วโชคดีกู้เบา</a>
 
+    <!-- โครงสร้าง Pop-up คำถาม -->
+    <div id="questionModal" class="modal">
+        <div class="modal-content">
+            <h2 id="modalText">เอาดง เอาดี</h2>
+            <div id="actionButtons">
+                <button class="btn btn-yes" onclick="sendAnswer('yes')">ใช่</button>
+                <button class="btn btn-no" onclick="sendAnswer('no')">ไม่ใช่</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function openQuestion() {
+            document.getElementById('questionModal').style.display = 'flex';
+        }
+
+        function sendAnswer(answer) {
+            // ใส่ URL ของ Python Backend ที่เอาขึ้น Render ตรงนี้
+            const backendUrl = "https://my-backend.onrender.com/check-answer";
+
+            fetch(backendUrl, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ choice: answer })
+            })
+            .then(response => response.json())
+            .then(data => {
+                // แสดงผลลัพธ์ที่ Python ส่งกลับมา
+                document.getElementById('modalText').innerText = data.message;
+                document.getElementById('actionButtons').style.display = 'none';
+                
+                // ปิดป๊อบอัพหลังแสดงผล 2 วินาที
+                setTimeout(() => {
+                    document.getElementById('questionModal').style.display = 'none';
+                    document.getElementById('actionButtons').style.display = 'block';
+                    document.getElementById('modalText').innerText = "คุณแน่ใจหรือไม่ว่าอยากโชคดี?";
+                }, 2000);
+            })
+            .catch(error => {
+                alert("ไม่สามารถเชื่อมต่อ Python Backend ได้");
+            });
+        }
+    </script>
 </body>
 </html>
