@@ -3,6 +3,36 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            text-align: center;
+            font-family: sans-serif;
+            background-color: #121212; 
+            color: white;
+        }
+        img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: 20px auto;
+        }
+        @keyframes rgbAnimation {
+            0%   { color: #ff0000; text-shadow: 0 0 8px #ff0000; }
+            33%  { color: #00ff00; text-shadow: 0 0 8px #00ff00; }
+            66%  { color: #00ffff; text-shadow: 0 0 8px #00ffff; }
+            100% { color: #ff0000; text-shadow: 0 0 8px #ff0000; }
+        }
+        .rgb-link {
+            font-size: 1.2rem;
+            text-decoration: none;
+            font-weight: bold;
+            animation: rgbAnimation 1.5s infinite linear; 
+        }
+
+        .rgb-link:hover {
+            text-decoration: underline;
+        }
+    </style>
     <title>for u</title>
 </head>
 <body>
