@@ -28,8 +28,6 @@
             margin: 0 auto 25px auto;
             border-radius: 8px;
         }
-
-        /* กำหนด Animation สำหรับสี RGB กระพริบ */
         @keyframes rgbAnimation {
             0%   { color: #ff0000; text-shadow: 0 0 12px #ff0000; }
             25%  { color: #00ff00; text-shadow: 0 0 12px #00ff00; }
@@ -37,17 +35,15 @@
             75%  { color: #ff00ff; text-shadow: 0 0 12px #ff00ff; }
             100% { color: #ff0000; text-shadow: 0 0 12px #ff0000; }
         }
-
-        /* บังคับทุกสถานะของลิงก์ (รวมถึงลิงก์ที่เคยกดแล้ว) ให้กระพริบตลอดเวลา */
         a.rgb-link, 
         a.rgb-link:visited, 
         a.rgb-link:hover, 
         a.rgb-link:active {
             display: inline-block;
-            font-size: 2rem; /* ขยายขนาดตัวหนังสือให้ใหญ่เห็นชัด */
+            font-size: 2rem;
             font-weight: bold;
             text-decoration: none;
-            animation: rgbAnimation 1s infinite linear !important; /* กระพริบเร็วขึ้นและบังคับใช้ */
+            animation: rgbAnimation 1s infinite linear !important; 
             margin-top: 15px;
         }
     </style>
@@ -56,7 +52,7 @@
 
     <h1>ควย</h1>
     
-    <img src="super-good.jpg" alt="รูปภาพ">
+    <img src="super-good.jpg"
     
     <a href="https://youtu.be/DjvwDCw6pl4?si=JEOh-tw1heNgUD9c" target="_blank" class="rgb-link">
         กดแล้วโชกลับมา
