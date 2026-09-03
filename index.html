@@ -67,7 +67,7 @@
             <h2 id="modalText">เอาดง เอาดี</h2>
             <div id="actionButtons">
                 <button class="btn btn-yes" onclick="sendAnswer('yes')">ใช่</button>
-                <button class="btn btn-no" onclick="sendAnswer('no')">ไม่ใช่</button>
+                <button class="btn btn-no" onclick="sendAnswer('no')">ไม่</button>
             </div>
         </div>
     </div>
@@ -96,7 +96,7 @@
                 setTimeout(() => {
                     document.getElementById('questionModal').style.display = 'none';
                     document.getElementById('actionButtons').style.display = 'block';
-                    document.getElementById('modalText').innerText = "คุณแน่ใจหรือไม่ว่าอยากโชคดี?";
+                    document.getElementById('modalText').innerText = "เลิกฝันครับน้องโชไม่กลับมาหรอก";
                 }, 2000);
             })
             .catch(error => {
