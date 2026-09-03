@@ -3,40 +3,64 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>for u</title>
+    
     <style>
         body {
             text-align: center;
             font-family: sans-serif;
-            background-color: #121212; 
+            background-color: #FFFFFF;
             color: white;
-        }
-        img {
-            max-width: 100%;
-            height: auto;
-            display: block;
-            margin: 20px auto;
-        }
-        @keyframes rgbAnimation {
-            0%   { color: #ff0000; text-shadow: 0 0 8px #ff0000; }
-            33%  { color: #00ff00; text-shadow: 0 0 8px #00ff00; }
-            66%  { color: #00ffff; text-shadow: 0 0 8px #00ffff; }
-            100% { color: #ff0000; text-shadow: 0 0 8px #ff0000; }
-        }
-        .rgb-link {
-            font-size: 1.2rem;
-            text-decoration: none;
-            font-weight: bold;
-            animation: rgbAnimation 1.5s infinite linear; 
+            margin: 0;
+            padding: 20px;
         }
 
-        .rgb-link:hover {
-            text-decoration: underline;
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+
+        img {
+            max-width: 90%;
+            width: 500px;
+            height: auto;
+            display: block;
+            margin: 0 auto 25px auto;
+            border-radius: 8px;
+        }
+
+        /* กำหนด Animation สำหรับสี RGB กระพริบ */
+        @keyframes rgbAnimation {
+            0%   { color: #ff0000; text-shadow: 0 0 12px #ff0000; }
+            25%  { color: #00ff00; text-shadow: 0 0 12px #00ff00; }
+            50%  { color: #00ffff; text-shadow: 0 0 12px #00ffff; }
+            75%  { color: #ff00ff; text-shadow: 0 0 12px #ff00ff; }
+            100% { color: #ff0000; text-shadow: 0 0 12px #ff0000; }
+        }
+
+        /* บังคับทุกสถานะของลิงก์ (รวมถึงลิงก์ที่เคยกดแล้ว) ให้กระพริบตลอดเวลา */
+        a.rgb-link, 
+        a.rgb-link:visited, 
+        a.rgb-link:hover, 
+        a.rgb-link:active {
+            display: inline-block;
+            font-size: 2rem; /* ขยายขนาดตัวหนังสือให้ใหญ่เห็นชัด */
+            font-weight: bold;
+            text-decoration: none;
+            animation: rgbAnimation 1s infinite linear !important; /* กระพริบเร็วขึ้นและบังคับใช้ */
+            margin-top: 15px;
         }
     </style>
-    <title>for u</title>
 </head>
 <body>
-    <h1> ควย</h1>
-    <img src="super good.jpg">
-    <a href="https://youtu.be/DjvwDCw6pl4?si=JEOh-tw1heNgUD9c">กดแล้วโชกลับมา</a>
+
+    <h1>ควย</h1>
+    
+    <img src="super-good.jpg" alt="รูปภาพ">
+    
+    <a href="https://youtu.be/DjvwDCw6pl4?si=JEOh-tw1heNgUD9c" target="_blank" class="rgb-link">
+        กดแล้วโชกลับมา
+    </a>
+
+</body>
 </html>
