@@ -7,7 +7,7 @@
     <style>
         body {
             text-align: center;
-            font-family: sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background-color: #121212;
             color: #ffffff;
             margin: 0;
@@ -24,42 +24,12 @@
             width: 450px;
             height: auto;
             display: block;
-            margin: 0 auto 30px auto;
+            margin: 0 auto 25px auto;
             border-radius: 12px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5);
         }
 
-        .modal {
-            display: none; 
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background-color: rgba(0, 0, 0, 0.85);
-            justify-content: center;
-            align-items: center;
-            z-index: 999;
-        }
-
-        .modal-content {
-            background-color: #222;
-            padding: 30px;
-            border-radius: 12px;
-            text-align: center;
-            border: 1px solid #444;
-            box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
-        }
-
-        .btn {
-            padding: 12px 25px;
-            margin: 10px;
-            font-size: 1.2rem;
-            font-weight: bold;
-            cursor: pointer;
-            border: none;
-            border-radius: 6px;
-        }
-
-        .btn-yes { background-color: #28a745; color: white; }
-        .btn-no { background-color: #dc3545; color: white; }
-
+        /* เอฟเฟกต์ไฟ RGB กระพริบ */
         @keyframes rgbAnimation {
             0%   { color: #ff0000; text-shadow: 0 0 15px #ff0000; }
             25%  { color: #00ff00; text-shadow: 0 0 15px #00ff00; }
@@ -75,6 +45,74 @@
             text-decoration: none;
             cursor: pointer;
             animation: rgbAnimation 1s infinite linear;
+            margin-bottom: 25px;
+            transition: transform 0.2s;
+        }
+
+        .rgb-link:hover {
+            transform: scale(1.05);
+        }
+
+        /* ตกแต่งกล่องคำถามด้านล่าง */
+        .question-card {
+            display: none; /* ซ่อนไว้ก่อน พอกดแล้วค่อยแสดง */
+            max-width: 400px;
+            margin: 0 auto;
+            background: linear-gradient(145deg, #1e1e24, #2a2a32);
+            padding: 25px 30px;
+            border-radius: 16px;
+            border: 2px solid #3a3a48;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7), 0 0 15px rgba(0, 255, 255, 0.2);
+            animation: fadeIn 0.4s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        .question-card h2 {
+            font-size: 1.5rem;
+            margin-top: 0;
+            margin-bottom: 20px;
+            color: #ffffff;
+        }
+
+        /* ตกแต่งปุ่ม ใช่ / ไม่ใช่ */
+        .btn-container {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .btn {
+            padding: 12px 30px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .btn-yes {
+            background-color: #28a745;
+            color: white;
+            box-shadow: 0 4px 12px rgba(40, 167, 69, 0.4);
+        }
+        .btn-yes:hover {
+            background-color: #218838;
+            transform: translateY(-2px);
+        }
+
+        .btn-no {
+            background-color: #dc3545;
+            color: white;
+            box-shadow: 0 4px 12px rgba(220, 53, 69, 0.4);
+        }
+        .btn-no:hover {
+            background-color: #c82333;
+            transform: translateY(-2px);
         }
     </style>
 </head>
@@ -82,46 +120,39 @@
 
     <h1>ควย</h1>
     
-    <img src="super good.jpg">
+    <img src="super-good.jpg" alt="รูปภาพ">
     
-    <a class="rgb-link" onclick="openModal()">
+    <!-- ปุ่มข้อความไฟกระพริบ -->
+    <a class="rgb-link" onclick="showBox()">
         กดแล้วโชกลับมา
     </a>
 
-    <div id="questionModal" class="modal">
-        <div class="modal-content">
-            <h2>มั่นใจอ่ะอยากให้มันกลับมา?</h2>
-            
-            <button class="btn btn-yes" onclick="sendToPython('yes')">ใช่</button>
-            <button class="btn btn-no" onclick="sendToPython('no')">ไม่ใช่</button>
+    <!-- กล่องคำถามสวยๆ แสดงด้านล่าง -->
+    <div id="questionBox" class="question-card">
+        <h2>คิดถึงโชอ่อ?</h2>
+        <div class="btn-container">
+            <button class="btn btn-yes" onclick="redirectPage('yes')">ใช่</button>
+            <button class="btn btn-no" onclick="redirectPage('no')">ไม่ใช่</button>
         </div>
     </div>
 
     <script>
-        function openModal() {
-            document.getElementById('questionModal').style.display = 'flex';
+        // แสดงกล่องคำถามด้านล่างเมื่อกดข้อความ RGB
+        function showBox() {
+            document.getElementById('questionBox').style.display = 'block';
+            // สโครลหน้าจอลงมาที่กล่องคำถามให้อัตโนมัติ
+            document.getElementById('questionBox').scrollIntoView({ behavior: 'smooth' });
         }
 
-        function sendToPython(choice) {
-            // ใส่ URL ของ Python API ที่ได้จาก Render ด้านล่างนี้
-            const pythonApiUrl = "https://my-python-api.onrender.com/get-redirect-url";
-
-            fetch(pythonApiUrl, {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({ choice: choice })
-            })
-            .then(response => response.json())
-            .then(data => {
-                // Python ส่ง URL ปลายทางกลับมา แล้วทำการย้ายหน้าเว็บ
-                window.location.href = data.target_url;
-            })
-            .catch(error => {
-                alert("เกิดข้อผิดพลาดในการเชื่อมต่อกับ Python Backend");
-                console.error("Error:", error);
-            });
+        // ย้ายหน้าเว็บตามคำตอบ
+        function redirectPage(choice) {
+            if (choice === 'yes') {
+                // ลิงก์เมื่อกด "ใช่"
+                window.location.href = "https://www.youtube.com/watch?si=JEOh-tw1heNgUD9c&v=DjvwDCw6pl4&feature=youtu.be";
+            } else if (choice === 'no') {
+                // ลิงก์เมื่อกด "ไม่ใช่"
+                window.location.href = "https://youtu.be/tUuqWFExZgY?si=Bey6GiM5XmKsKL2t";
+            }
         }
     </script>
 
