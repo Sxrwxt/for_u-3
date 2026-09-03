@@ -8,7 +8,7 @@
         body {
             text-align: center;
             font-family: sans-serif;
-            background-color: #F5F5F5;
+            background-color: #121212;
             color: #ffffff;
             margin: 0;
             padding: 40px 20px;
@@ -17,7 +17,6 @@
         h1 {
             font-size: 3rem;
             margin-bottom: 20px;
-            color: #000000;
         }
 
         img {
@@ -29,6 +28,38 @@
             border-radius: 12px;
         }
 
+        .modal {
+            display: none; 
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-color: rgba(0, 0, 0, 0.85);
+            justify-content: center;
+            align-items: center;
+            z-index: 999;
+        }
+
+        .modal-content {
+            background-color: #222;
+            padding: 30px;
+            border-radius: 12px;
+            text-align: center;
+            border: 1px solid #444;
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
+        }
+
+        .btn {
+            padding: 12px 25px;
+            margin: 10px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            cursor: pointer;
+            border: none;
+            border-radius: 6px;
+        }
+
+        .btn-yes { background-color: #28a745; color: white; }
+        .btn-no { background-color: #dc3545; color: white; }
+
         @keyframes rgbAnimation {
             0%   { color: #ff0000; text-shadow: 0 0 15px #ff0000; }
             25%  { color: #00ff00; text-shadow: 0 0 15px #00ff00; }
@@ -37,15 +68,13 @@
             100% { color: #ff0000; text-shadow: 0 0 15px #ff0000; }
         }
 
-        a.rgb-link, 
-        a.rgb-link:visited, 
-        a.rgb-link:hover, 
-        a.rgb-link:active {
+        .rgb-link {
             display: inline-block;
             font-size: 2.2rem;
             font-weight: bold;
             text-decoration: none;
-            animation: rgbAnimation 1s infinite linear !important;
+            cursor: pointer;
+            animation: rgbAnimation 1s infinite linear;
         }
     </style>
 </head>
@@ -55,54 +84,46 @@
     
     <img src="super good.jpg">
     
-    <a href="https://youtu.be/DjvwDCw6pl4?si=JEOh-tw1heNgUD9c" target="_blank" class="rgb-link">
+    <a class="rgb-link" onclick="openModal()">
         กดแล้วโชกลับมา
     </a>
-<!-- ปุ่มป๊อบอัพ -->
-    <a class="rgb-link" onclick="openQuestion()">กดแล้วโชกลับมา</a>
 
-    <!-- โครงสร้าง Pop-up คำถาม -->
     <div id="questionModal" class="modal">
         <div class="modal-content">
-            <h2 id="modalText">เอาดง เอาดี</h2>
-            <div id="actionButtons">
-                <button class="btn btn-yes" onclick="sendAnswer('yes')">ใช่</button>
-                <button class="btn btn-no" onclick="sendAnswer('no')">ไม่</button>
-            </div>
+            <h2>มั่นใจอ่ะอยากให้มันกลับมา?</h2>
+            
+            <button class="btn btn-yes" onclick="sendToPython('yes')">ใช่</button>
+            <button class="btn btn-no" onclick="sendToPython('no')">ไม่ใช่</button>
         </div>
     </div>
 
     <script>
-        function openQuestion() {
+        function openModal() {
             document.getElementById('questionModal').style.display = 'flex';
         }
 
-        function sendAnswer(answer) {
-            // ใส่ URL ของ Python Backend ที่เอาขึ้น Render ตรงนี้
-            const backendUrl = "https://my-backend.onrender.com/check-answer";
+        function sendToPython(choice) {
+            // ใส่ URL ของ Python API ที่ได้จาก Render ด้านล่างนี้
+            const pythonApiUrl = "https://my-python-api.onrender.com/get-redirect-url";
 
-            fetch(backendUrl, {
+            fetch(pythonApiUrl, {
                 method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ choice: answer })
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ choice: choice })
             })
             .then(response => response.json())
             .then(data => {
-                // แสดงผลลัพธ์ที่ Python ส่งกลับมา
-                document.getElementById('modalText').innerText = data.message;
-                document.getElementById('actionButtons').style.display = 'none';
-                
-                // ปิดป๊อบอัพหลังแสดงผล 2 วินาที
-                setTimeout(() => {
-                    document.getElementById('questionModal').style.display = 'none';
-                    document.getElementById('actionButtons').style.display = 'block';
-                    document.getElementById('modalText').innerText = "เลิกฝันครับน้องโชไม่กลับมาหรอก";
-                }, 2000);
+                // Python ส่ง URL ปลายทางกลับมา แล้วทำการย้ายหน้าเว็บ
+                window.location.href = data.target_url;
             })
             .catch(error => {
-                alert("ไม่สามารถเชื่อมต่อ Python Backend ได้");
+                alert("เกิดข้อผิดพลาดในการเชื่อมต่อกับ Python Backend");
+                console.error("Error:", error);
             });
         }
     </script>
+
 </body>
 </html>
