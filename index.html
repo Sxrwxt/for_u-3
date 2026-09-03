@@ -7,7 +7,7 @@
     <style>
         body {
             text-align: center;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: sans-serif;
             background-color: #F5F5F5;
             color: #000000;
             margin: 0;
@@ -19,17 +19,16 @@
             margin-bottom: 20px;
         }
 
-        img {
+        img.main-img {
             max-width: 90%;
             width: 450px;
             height: auto;
             display: block;
             margin: 0 auto 25px auto;
             border-radius: 12px;
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5);
         }
 
-        /* เอฟเฟกต์ไฟ RGB กระพริบ */
+        /* ไฟ RGB กระพริบ */
         @keyframes rgbAnimation {
             0%   { color: #ff0000; text-shadow: 0 0 15px #ff0000; }
             25%  { color: #00ff00; text-shadow: 0 0 15px #00ff00; }
@@ -46,43 +45,64 @@
             cursor: pointer;
             animation: rgbAnimation 1s infinite linear;
             margin-bottom: 25px;
-            transition: transform 0.2s;
         }
 
-        .rgb-link:hover {
-            transform: scale(1.05);
+        /* พื้นหลังป๊อปอัพ (Overlay) */
+        .modal-overlay {
+            display: none; /* ซ่อนไว้ก่อน */
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.85);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
         }
 
-        /* ตกแต่งกล่องคำถามด้านล่าง */
-        .question-card {
-            display: none; /* ซ่อนไว้ก่อน พอกดแล้วค่อยแสดง */
-            max-width: 400px;
-            margin: 0 auto;
-            background: linear-gradient(145deg, #1e1e24, #2a2a32);
-            padding: 25px 30px;
+        /* กล่องป๊อปอัพ */
+        .modal-box {
+            position: relative;
+            background-color: #1e1e24;
+            padding: 25px;
             border-radius: 16px;
             border: 2px solid #3a3a48;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7), 0 0 15px rgba(0, 255, 255, 0.2);
-            animation: fadeIn 0.4s ease-in-out;
+            max-width: 420px;
+            width: 90%;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.8);
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to   { opacity: 1; transform: translateY(0); }
+        /* ปุ่มกากบาทปิดมุมขวาบน */
+        .close-btn {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            font-size: 28px;
+            font-weight: bold;
+            color: #aaaaaa;
+            cursor: pointer;
+            transition: color 0.2s;
+            line-height: 1;
         }
 
-        .question-card h2 {
-            font-size: 1.5rem;
-            margin-top: 0;
-            margin-bottom: 20px;
+        .close-btn:hover {
             color: #ffffff;
         }
 
-        /* ตกแต่งปุ่ม ใช่ / ไม่ใช่ */
+        .modal-img {
+            width: 100%;
+            max-height: 250px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-bottom: 15px;
+        }
+
         .btn-container {
             display: flex;
             justify-content: center;
             gap: 15px;
+            margin-top: 15px;
         }
 
         .btn {
@@ -92,28 +112,10 @@
             border: none;
             border-radius: 8px;
             cursor: pointer;
-            transition: all 0.2s ease;
         }
 
-        .btn-yes {
-            background-color: #28a745;
-            color: white;
-            box-shadow: 0 4px 12px rgba(40, 167, 69, 0.4);
-        }
-        .btn-yes:hover {
-            background-color: #218838;
-            transform: translateY(-2px);
-        }
-
-        .btn-no {
-            background-color: #dc3545;
-            color: white;
-            box-shadow: 0 4px 12px rgba(220, 53, 69, 0.4);
-        }
-        .btn-no:hover {
-            background-color: #c82333;
-            transform: translateY(-2px);
-        }
+        .btn-yes { background-color: #28a745; color: white; }
+        .btn-no { background-color: #dc3545; color: white; }
     </style>
 </head>
 <body>
@@ -135,6 +137,24 @@
             <button class="btn btn-no" onclick="redirectPage('no')">ไม่ใช่</button>
         </div>
     </div>
+    
+    <!-- โครงสร้างป๊อปอัพแบบแสดงรูปพร้อมกากบาทมุมขวา -->
+    <div id="popupModal" class="modal-overlay">
+        <div class="modal-box">
+            <!-- ปุ่มกากบาทมุมขวาบน -->
+            <span class="close-btn" onclick="closePopup()">&times;</span>
+            
+            <!-- รูปภาพในป๊อปอัพ (ใช้นามสกุล/ชื่อเดียวกับรูปเดิมได้) -->
+            <img src="super-good.jpg" alt="รูปป๊อปอัพ" class="modal-img">
+            
+            <h2>คุณแน่ใจหรือไม่ว่าอยากโชคดี?</h2>
+            
+            <div class="btn-container">
+                <button class="btn btn-yes" onclick="window.location.assign('https://youtu.be/DjvwDCw6pl4?si=JEOh-tw1heNgUD9c')">ใช่</button>
+                <button class="btn btn-no" onclick="window.location.assign('https://www.google.com')">ไม่ใช่</button>
+            </div>
+        </div>
+    </div>
 
     <script>
         // แสดงกล่องคำถามด้านล่างเมื่อกดข้อความ RGB
@@ -152,6 +172,24 @@
             } else if (choice === 'no') {
                 // ลิงก์เมื่อกด "ไม่ใช่"
                 window.location.href = "https://youtu.be/tUuqWFExZgY?si=-EobV1gSg6oHFbGZ&t=190";
+            }
+        }
+    </script>
+
+    <script>
+        function openPopup() {
+            document.getElementById('popupModal').style.display = 'flex';
+        }
+
+        function closePopup() {
+            document.getElementById('popupModal').style.display = 'none';
+        }
+
+        // กดพื้นที่สีดำด้านนอกเพื่อปิดป๊อปอัพได้ด้วย
+        window.onclick = function(event) {
+            var modal = document.getElementById('popupModal');
+            if (event.target == modal) {
+                modal.style.display = 'none';
             }
         }
     </script>
