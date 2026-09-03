@@ -10,9 +10,9 @@ def check_answer():
     user_choice = data.get('choice')  # รับค่า 'yes' หรือ 'no'
     
     if user_choice == 'yes':
-        response_text = "คุณตอบ ใช่! โชคดีแน่นอน!"
+        response_text = "เลิกฝันครับน้อง"
     else:
-        response_text = "คุณตอบ ไม่ใช่! เสียใจด้วยนะ!"
+        response_text = "เดี๋ยวโชก็กลับมา"
         
     return jsonify({"message": response_text})
 
