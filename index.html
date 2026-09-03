@@ -47,38 +47,98 @@
             margin-bottom: 25px;
         }
 
+        /* พื้นหลังป๊อปอัพ (Overlay) */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.85);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        /* กล่องป๊อปอัพ */
+        .modal-box {
+            position: relative;
+            background-color: #1e1e24;
+            padding: 25px;
+            border-radius: 16px;
+            border: 2px solid #3a3a48;
+            max-width: 420px;
+            width: 90%;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.8);
+        }
+
+        /* ปุ่มกากบาทมุมขวาบน */
+        .close-btn {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            font-size: 28px;
+            font-weight: bold;
+            color: #aaaaaa;
+            cursor: pointer;
+            transition: color 0.2s;
+            line-height: 1;
+        }
+
+        .close-btn:hover {
+            color: #ffffff;
+        }
+
+        .modal-img {
+            width: 100%;
+            max-height: 250px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-bottom: 15px;
+        }
+
+        .btn-container {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .btn {
+            padding: 12px 30px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        .btn-yes { background-color: #28a745; color: white; }
+        .btn-no { background-color: #dc3545; color: white; }
     </style>
 </head>
 <body>
 
     <h1>ควย</h1>
     
-    <img src="super good.jpg" alt="รูปภาพ">
+    <img src="super good.jpg" alt="รูปภาพ" class="main-img">
     
-    <!-- ปุ่มข้อความไฟกระพริบ -->
-    <a class="rgb-link" onclick="showBox()">
+    <!-- ปุ่มข้อความไฟกระพริบ (กดเพื่อเปิดป๊อปอัพซ้ำได้) -->
+    <a class="rgb-link" onclick="openPopup()">
         กดแล้วโชกลับมา
     </a>
 
-    <!-- กล่องคำถามสวยๆ แสดงด้านล่าง -->
-    <div id="questionBox" class="question-card">
-        <h2>คิดถึงโชอ่อ?</h2>
-        <div class="btn-container">
-            <button class="btn btn-yes" onclick="redirectPage('yes')">ใช่</button>
-            <button class="btn btn-no" onclick="redirectPage('no')">ไม่ใช่</button>
-        </div>
-    </div>
-    
-    <!-- โครงสร้างป๊อปอัพแบบแสดงรูปพร้อมกากบาทมุมขวา -->
+    <!-- โครงสร้างป๊อปอัพ -->
     <div id="popupModal" class="modal-overlay">
         <div class="modal-box">
             <!-- ปุ่มกากบาทมุมขวาบน -->
             <span class="close-btn" onclick="closePopup()">&times;</span>
             
-            <!-- รูปภาพในป๊อปอัพ (ใช้นามสกุล/ชื่อเดียวกับรูปเดิมได้) -->
-            <img src="Cho.jpg" alt="รูปป๊อปอัพ" class="modal-img">
+            <!-- รูปภาพในป๊อปอัพ -->
+            <img src="cho.jpg" alt="รูปป๊อปอัพ" class="modal-img">
             
-            <h2>คุณแน่ใจหรือไม่ว่าอยากโชคดี?</h2>
+            <h2>คิดถึงโชอ่อ?</h2>
             
             <div class="btn-container">
                 <button class="btn btn-yes" onclick="window.location.assign('https://youtu.be/DjvwDCw6pl4?si=JEOh-tw1heNgUD9c')">ใช่</button>
@@ -88,25 +148,27 @@
     </div>
 
     <script>
-        // แสดงกล่องคำถามด้านล่างเมื่อกดข้อความ RGB
-        function showBox() {
-            document.getElementById('questionBox').style.display = 'block';
-            // สโครลหน้าจอลงมาที่กล่องคำถามให้อัตโนมัติ
-            document.getElementById('questionBox').scrollIntoView({ behavior: 'smooth' });
+        function openPopup() {
+            document.getElementById('popupModal').style.display = 'flex';
         }
 
-        // ย้ายหน้าเว็บตามคำตอบ
-        function redirectPage(choice) {
-            if (choice === 'yes') {
-                // ลิงก์เมื่อกด "ใช่"
-                window.location.href = "https://www.youtube.com/watch?si=JEOh-tw1heNgUD9c&v=DjvwDCw6pl4&feature=youtu.be";
-            } else if (choice === 'no') {
-                // ลิงก์เมื่อกด "ไม่ใช่"
-                window.location.href = "https://youtu.be/tUuqWFExZgY?si=-EobV1gSg6oHFbGZ&t=190";
+        function closePopup() {
+            document.getElementById('popupModal').style.display = 'none';
+        }
+
+        // ปิดป๊อปอัพเมื่อคลิกพื้นที่นอกกล่อง
+        window.onclick = function(event) {
+            var modal = document.getElementById('popupModal');
+            if (event.target == modal) {
+                modal.style.display = 'none';
             }
         }
-    </script>
 
+        // เด้งป๊อปอัพขึ้นมาทันทีที่เปิดเข้าเว็บ
+        window.onload = function() {
+            openPopup();
+        };
+    </script>
 
 </body>
 </html>
